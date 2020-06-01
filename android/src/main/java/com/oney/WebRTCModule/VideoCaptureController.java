@@ -7,6 +7,8 @@ import com.facebook.react.bridge.ReadableMap;
 import org.webrtc.CameraEnumerator;
 import org.webrtc.CameraVideoCapturer;
 import org.webrtc.VideoCapturer;
+import org.webrtc.ContextUtils;
+import org.webrtc.SurfaceViewRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,12 @@ public class VideoCaptureController {
         = VideoCaptureController.class.getSimpleName();
 
     private boolean isFrontFacing;
+
+    private static UsbCapturer usbCapturer;
+
+    public static void setSurfaceViewRenderer(SurfaceViewRenderer renderer) {
+        usbCapturer.setSvVideoRender(renderer);
+    }
 
     /**
      * Values for width, height and fps (respectively) which will be
@@ -54,7 +62,9 @@ public class VideoCaptureController {
         String deviceId = ReactBridgeUtil.getMapStrValue(constraints, "deviceId");
         String facingMode = ReactBridgeUtil.getMapStrValue(constraints, "facingMode");
 
-        videoCapturer = createVideoCapturer(deviceId, facingMode);
+        usbCapturer = new UsbCapturer(ContextUtils.getApplicationContext(), null);
+        videoCapturer = usbCapturer;
+//        videoCapturer = createVideoCapturer(deviceId, facingMode);
     }
 
     public void dispose() {

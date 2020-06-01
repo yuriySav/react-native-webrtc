@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
@@ -170,6 +170,9 @@ public class WebRTCView extends ViewGroup {
         super(context);
 
         surfaceViewRenderer = new SurfaceViewRenderer(context);
+
+        VideoCaptureController.setSurfaceViewRenderer(surfaceViewRenderer);
+
         addView(surfaceViewRenderer);
 
         setMirror(false);
@@ -619,3 +622,4 @@ public class WebRTCView extends ViewGroup {
         }
     }
 }
+
